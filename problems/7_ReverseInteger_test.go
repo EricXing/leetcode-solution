@@ -12,4 +12,7 @@ func TestReverse(t *testing.T) {
 	if Reverse(120) != 21 {
 		t.Error("Reverse Integer: case 3 failed")
 	}
+	if Reverse(1534236469) != 0 {
+		t.Error("Reverse Integer: case 3 failed")
+	}
 }

@@ -23,18 +23,20 @@ package problems
 // For the purpose of this problem, assume that your function returns 0 when
 // the reversed integer overflows.
 func Reverse(x int) int {
+	var intMax = 2147483647
+	var intMin = -2147483648
 	var reversed = 0
-	var negative = false
-	if x < 0{
-		negative = true
-		x = x * -1
-	}
-	for ; x > 0; x = x / 10 {
-		reversed = reversed * 10 + x % 10
+	for ; x != 0;  {
+		var pop = x % 10
+		x = x / 10
+		if reversed >intMax / 10 || (reversed == intMax / 10 && pop > 7){
+			return 0
+		}
+		if reversed < intMin / 10 || (reversed == intMin / 10 && pop < -8){
+			return 0
+		}
+		reversed = reversed * 10 + pop
 	}
 
-	if negative {
-		reversed = reversed * -1
-	}
 	return reversed
 }
