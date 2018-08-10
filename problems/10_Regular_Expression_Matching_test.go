@@ -96,4 +96,9 @@ func TestIsMatch1(t *testing.T) {
 	} else {
 		t.Error("10. Regular Expression Matching case 9 failed.")
 	}
+	if IsMatch1("aaa", "ab*a*c*a") {
+		t.Log("10. Regular Expression Matching: case 10 succeeded.")
+	} else {
+		t.Error("10. Regular Expression Matching case 10 failed.")
+	}
 }

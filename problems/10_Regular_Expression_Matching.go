@@ -121,22 +121,31 @@ func IsMatch1(s string, p string) bool {
 	return j == len(s)
 }
 
+// simplify pattern. .*a* equals to .*, a*a equals to a*
 func compile(p string) string {
-	newP := make([]byte, 0, len(p))
-	mark := -1
-	for i:=0;i<len(p);i++{
-		// The last pattern of p is .*, so the rest can be skipped
-		if p[i] == '.' && i < len(p) -1 && p[i+1] =='*' {
-			newP = append(newP, '*')
-			break
+	seg := make([]string, 0, len(p))
+	//tokenize pattern into single rule
+	for i := 0; i < len(p); i++ {
+		if i < len(p)-1 && p[i+1] == '*' {
+			seg = append(seg, p[i:i+2])
+			i++
+		} else {
+			seg = append(seg, string(p[i]))
 		}
-		if p[i] !='*'{
-			mark = i
-		}
-		if mark <len(p) && p[i] == p[mark]{
-			continue
-		}
-		newP = append(newP, p[i])
 	}
-	return string(newP)
+	newPattern := ""
+	for j := 0; j < len(seg); {
+		newPattern += seg[j]
+		n := j + 1
+		if j < len(seg)-1 && len(seg[j]) == 2 {
+			for ; n < len(seg); n++ {
+				if !(seg[j][0] == '.' || seg[j][0] == seg[n][0]) && len(seg[n]) == 2 || (len(seg[n]) == 1 && seg[n][0] != seg[j][0]) {
+					j = n
+					break
+				}
+			}
+		}
+		j = n
+	}
+	return newPattern
 }
