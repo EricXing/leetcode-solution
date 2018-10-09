@@ -4,13 +4,13 @@ import (
 	"testing"
 )
 
-func TestGenerateParenthesis(t *testing.T){
+func TestGenerateParenthesis(t *testing.T) {
 	parenthesis := GenerateParenthesis(3)
 	set := StringSet{make(map[string]bool)}
 	set.Add([]string{"((()))", "(()())", "(())()", "()(())", "()()()"})
-	if set.Size() == len(parenthesis){
+	if set.Size() == len(parenthesis) {
 		for _, val := range parenthesis {
-			if ! set.In(val) {
+			if !set.In(val) {
 				t.Error("22.Generate Parentheses: case 1 failed.")
 				return
 			}
@@ -21,21 +21,21 @@ func TestGenerateParenthesis(t *testing.T){
 	}
 }
 
- type StringSet struct {
-	 values map[string]bool
- }
+type StringSet struct {
+	values map[string]bool
+}
 
- func (set *StringSet) Add(val []string){
+func (set *StringSet) Add(val []string) {
 	for _, s := range val {
 		set.values[s] = true
 	}
- }
+}
 
- func (set *StringSet) In(val string) bool{
-	 _, ok := set.values[val]
-	 return ok
- }
+func (set *StringSet) In(val string) bool {
+	_, ok := set.values[val]
+	return ok
+}
 
- func (set *StringSet) Size() int {
-	 return len(set.values)
- }
+func (set *StringSet) Size() int {
+	return len(set.values)
+}
