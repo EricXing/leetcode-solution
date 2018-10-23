@@ -18,17 +18,26 @@ package problems
 //	Only constant extra memory is allowed.
 //	You may not alter the values in the list's nodes, only nodes itself may be changed.
 func ReverseKGroup(head *ListNode, k int) *ListNode {
-	step := 1
-	flag := &head
-	curr := &head
-	for ; (*curr).Next != nil; {
-		if step%k == 0 {
-			(*flag).Val, (*curr).Val = (*curr).Val, (*flag).Val
-		} else if step%k == 1 {
-			flag = curr
-		}
-		step += 1
-		curr = &(*curr).Next
+	size := 0
+	temp := &head
+	for *temp != nil {
+		size += 1
+		temp = &(*temp).Next
 	}
-	return head
+
+	root := &ListNode{Next: head}
+	res := root
+	for size >= k {
+		for i := 0; i < k-1; i += 1 {
+			node := root.Next
+			root.Next = head.Next
+			head.Next = root.Next.Next
+			root.Next.Next = node
+		}
+		root = head
+		head = head.Next
+		size -= k
+	}
+
+	return res.Next
 }
